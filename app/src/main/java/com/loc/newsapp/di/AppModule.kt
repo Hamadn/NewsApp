@@ -1,8 +1,8 @@
 package com.loc.newsapp.di
 
 import android.app.Application
-import com.loc.newsapp.data.NewsApi
-import com.loc.newsapp.data.manager.LocalUserManagerImpl
+import com.loc.newsapp.data.manager.LocalUserMangerImpl
+import com.loc.newsapp.data.remote.NewsApi
 import com.loc.newsapp.data.repository.NewsRepositoryImpl
 import com.loc.newsapp.domain.manager.LocalUserManager
 import com.loc.newsapp.domain.repository.NewsRepository
@@ -11,6 +11,7 @@ import com.loc.newsapp.domain.usecases.app_entry.ReadAppEntry
 import com.loc.newsapp.domain.usecases.app_entry.SaveAppEntry
 import com.loc.newsapp.domain.usecases.news.GetNews
 import com.loc.newsapp.domain.usecases.news.NewsUseCases
+import com.loc.newsapp.domain.usecases.news.SearchNews
 import com.loc.newsapp.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -23,27 +24,27 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
     @Provides
     @Singleton
     fun provideLocalUserManager(
         application: Application
-    ): LocalUserManager = LocalUserManagerImpl(application)
-
+    ): LocalUserManager = LocalUserMangerImpl(context = application)
 
     @Provides
     @Singleton
     fun provideAppEntryUseCases(
-        localUserManager: LocalUserManager
-    ) = AppEntryUseCases(
-        readAppEntry = ReadAppEntry(localUserManager),
-        saveAppEntry = SaveAppEntry(localUserManager)
+        localUserManger: LocalUserManager
+    ): AppEntryUseCases = AppEntryUseCases(
+        readAppEntry = ReadAppEntry(localUserManger),
+        saveAppEntry = SaveAppEntry(localUserManger)
     )
-
 
     @Provides
     @Singleton
-    fun provideNewsApi(): NewsApi {
-        return Retrofit.Builder()
+    fun provideApiInstance(): NewsApi {
+        return Retrofit
+            .Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -54,7 +55,9 @@ object AppModule {
     @Singleton
     fun provideNewsRepository(
         newsApi: NewsApi
-    ): NewsRepository = NewsRepositoryImpl(newsApi)
+    ): NewsRepository {
+        return NewsRepositoryImpl(newsApi)
+    }
 
     @Provides
     @Singleton
@@ -62,7 +65,9 @@ object AppModule {
         newsRepository: NewsRepository
     ): NewsUseCases {
         return NewsUseCases(
-            getNews = GetNews(newsRepository)
+            getNews = GetNews(newsRepository),
+            searchNews = SearchNews(newsRepository)
         )
     }
+
 }
