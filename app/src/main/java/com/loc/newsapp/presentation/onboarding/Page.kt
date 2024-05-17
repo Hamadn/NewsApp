@@ -11,18 +11,18 @@ data class Page(
 
 val pages = listOf(
     Page(
-        title = "Lorem ipsum is simply dummy",
-        description = "Lorem ipsum hello how are you anime demon slayer bleach",
+        title = "Welcome to Kabar",
+        description = "Discover the latest news articles. Browse through various categories and stay informed.",
         image = R.drawable.onboarding1
     ),
     Page(
-        title = "Lorem ipsum is simply dummy",
-        description = "Lorem ipsum hello how are you anime demon slayer bleach",
+        title = "Read, Save, and Share",
+        description = "Click on any article to read more. Use the world icon to view the full article on the web. Bookmark articles to save them and share articles with friends easily.",
         image = R.drawable.onboarding2
     ),
     Page(
-        title = "Lorem ipsum is simply dummy",
-        description = "Lorem ipsum hello how are you anime demon slayer bleach",
+        title = "Search and Manage",
+        description = "Use the search bar to find specific articles. Access saved articles in the Bookmarks tab. Manage your bookmarks by clicking the bookmark icon again to remove them.",
         image = R.drawable.onboarding3
     ),
 

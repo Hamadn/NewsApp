@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.loc.newsapp.presentation.Dimens.MediumPadding2
-import com.loc.newsapp.presentation.Dimens.MediumPadding3
 import com.loc.newsapp.presentation.common.NewsButton
 import com.loc.newsapp.presentation.common.NewsTextButton
 import com.loc.newsapp.presentation.onboarding.components.OnBoardingPage
@@ -73,7 +72,6 @@ fun OnBoardingScreen(
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 val scope = rememberCoroutineScope()
-                //Hide the button when the first element of the list is empty
                 if (buttonsState.value[0].isNotEmpty()) {
                     NewsTextButton(
                         text = buttonsState.value[0],
