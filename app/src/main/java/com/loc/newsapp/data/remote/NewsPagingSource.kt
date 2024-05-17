@@ -1,6 +1,5 @@
 package com.loc.newsapp.data.remote
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.loc.newsapp.domain.model.Article
@@ -25,7 +24,7 @@ class NewsPagingSource(
         return try {
             val newsResponse = newsApi.getNews(sources = sources, page = page)
             totalNewsCount += newsResponse.articles.size
-            val articles = newsResponse.articles.distinctBy { it.title } //Remove duplicates
+            val articles = newsResponse.articles.distinctBy { it.title }
 
             LoadResult.Page(
                 data = articles,
